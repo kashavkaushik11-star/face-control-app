@@ -1,0 +1,6 @@
+{
+  "name": "Face Control",
+  "description": "Hands-free Android navigation using front camera face and head gesture tracking, dwell clicks, and accessibility service.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

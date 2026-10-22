@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Face Control</string>
+    <string name="accessibility_service_name">Face Control Hands-Free Service</string>
+    <string name="accessibility_service_description">Enables hands-free device control using face orientation, head movements, and eye blinks to perform system actions like Back, Home, Recents, and screen taps.</string>
+</resources>
