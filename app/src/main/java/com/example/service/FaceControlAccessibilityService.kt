@@ -12,11 +12,20 @@ import java.lang.ref.WeakReference
 
 class FaceControlAccessibilityService : AccessibilityService() {
 
+    private var overlayManager: SystemOverlayManager? = null
+
     override fun onServiceConnected() {
         super.onServiceConnected()
         instanceRef = WeakReference(this)
         _isServiceActive.value = true
         _statusMessage.value = "Face Control Accessibility Service Connected"
+
+        try {
+            overlayManager = SystemOverlayManager(this)
+            overlayManager?.startOverlay()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -29,6 +38,8 @@ class FaceControlAccessibilityService : AccessibilityService() {
 
     override fun onDestroy() {
         super.onDestroy()
+        overlayManager?.stopOverlay()
+        overlayManager = null
         if (instanceRef?.get() == this) {
             instanceRef = null
         }
@@ -36,6 +47,8 @@ class FaceControlAccessibilityService : AccessibilityService() {
     }
 
     override fun onUnbind(intent: android.content.Intent?): Boolean {
+        overlayManager?.stopOverlay()
+        overlayManager = null
         _isServiceActive.value = false
         return super.onUnbind(intent)
     }
