@@ -20,14 +20,22 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
+      - name: Generate Debug Keystore
+        run: |
+          keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Build Debug APK
         run: ./gradlew :app:assembleDebug
 
+      - name: Copy APK with clean name
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk FaceControl.apk
+
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: FaceControl-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: FaceControl.apk
